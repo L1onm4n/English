@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legacy & Impact — The Transatlantic Slave Trade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+
+/* ── RESET & BASE ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink:     #141414;
+  --ink2:    #1f1f1f;
+  --ink3:    #2c2c2c;
+  --rule:    #2e2e2e;
+  --muted:   #6b6b6b;
+  --sub:     #a0a0a0;
+  --light:   #e8e4dd;
+  --white:   #f5f2ed;
+  --accent:  #c0392b;
+  --accent2: #e67e22;
+  --serif:   'DM Serif Display', Georgia, serif;
+  --sans:    'DM Sans', system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--ink);
+  color: var(--light);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* ── PROGRESS ── */
+#prog {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  width: 0%;
+  background: var(--accent);
+  z-index: 9999;
+  transition: width 0.08s linear;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 56px;
+  transition: background 0.3s, border-bottom 0.3s;
+}
+nav.solid {
+  background: var(--ink);
+  border-bottom: 1px solid var(--rule);
+}
+.nav-brand {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  color: var(--white);
+  opacity: 0.7;
+}
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--white); }
+
+/* ── HERO (full-screen title slide) ── */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 0 32px;
+  position: relative;
+  border-bottom: 1px solid var(--rule);
+}
+.hero-label {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 28px;
+}
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(3.2rem, 9vw, 8rem);
+  line-height: 1;
+  color: var(--white);
+  margin-bottom: 28px;
+}
+.hero h1 em { font-style: italic; color: var(--accent); }
+.hero-sub {
+  font-size: 1rem;
+  color: var(--sub);
+  max-width: 480px;
+  margin: 0 auto 56px;
+  font-weight: 300;
+  line-height: 1.65;
+}
+.hero-scroll {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0.4;
+  animation: nudge 2.4s ease-in-out infinite;
+}
+.hero-scroll span { font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase; }
+.hero-arrow { width: 1px; height: 44px; background: var(--light); }
+@keyframes nudge { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+
+/* ── SLIDE (full-screen section) ── */
+.slide {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 100px 0;
+  border-bottom: 1px solid var(--rule);
+  position: relative;
+}
+.slide-inner {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 56px;
+  width: 100%;
+}
+.slide-inner-wide {
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 0 56px;
+  width: 100%;
+}
+
+/* ── CHAPTER TAG ── */
+.ch-tag {
+  display: inline-block;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid rgba(192,57,43,0.35);
+  padding: 4px 12px;
+  margin-bottom: 32px;
+}
+
+/* ── HEADINGS ── */
+.slide-title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  line-height: 1.1;
+  color: var(--white);
+  margin-bottom: 12px;
+}
+.slide-title em { font-style: italic; color: var(--accent); }
+
+.slide-intro {
+  font-size: 1rem;
+  color: var(--sub);
+  margin-bottom: 48px;
+  max-width: 600px;
+  line-height: 1.6;
+}
+
+/* ── RULE ── */
+hr {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 40px 0;
+}
+
+/* ── BULLET LIST (the main content format) ── */
+.points {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.points li {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 16px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--rule);
+  align-items: start;
+}
+.points li:first-child { border-top: 1px solid var(--rule); }
+.points li .dot {
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  margin-top: 9px;
+  flex-shrink: 0;
+}
+.points li p {
+  font-size: 0.97rem;
+  color: var(--light);
+  font-weight: 300;
+  line-height: 1.7;
+}
+.points li p strong {
+  font-weight: 500;
+  color: var(--white);
+}
+.points li p em {
+  color: var(--sub);
+  font-style: normal;
+}
+
+/* ── STAT ROW ── */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  margin: 48px 0;
+}
+.stat-cell {
+  background: var(--ink2);
+  padding: 32px 24px;
+  text-align: center;
+}
+.stat-n {
+  display: block;
+  font-family: var(--serif);
+  font-size: 2.6rem;
+  line-height: 1;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.stat-l {
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: var(--muted);
+  line-height: 1.45;
+  letter-spacing: 0.03em;
+}
+
+/* ── QUOTE BLOCK ── */
+.qblock {
+  border-left: 2px solid var(--accent);
+  padding: 24px 32px;
+  margin: 48px 0;
+  background: var(--ink2);
+}
+.qblock p {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.3rem;
+  line-height: 1.5;
+  color: var(--white);
+}
+.qblock cite {
+  display: block;
+  margin-top: 12px;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-style: normal;
+  font-family: var(--sans);
+}
+
+/* ── TWO-COL GRID ── */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--rule);
+  margin: 48px 0;
+}
+.col-block {
+  background: var(--ink2);
+  padding: 36px 32px;
+}
+.col-block h4 {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  color: var(--white);
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--rule);
+}
+.col-block .points li { padding: 14px 0; }
+.col-block .points li p { font-size: 0.88rem; }
+
+/* ── TIMELINE ── */
+.tl {
+  position: relative;
+  padding-left: 32px;
+  margin: 48px 0;
+}
+.tl::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 8px; bottom: 8px;
+  width: 1px;
+  background: var(--rule);
+}
+.tl-item {
+  position: relative;
+  padding: 0 0 36px 0;
+}
+.tl-item:last-child { padding-bottom: 0; }
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: -36px;
+  top: 8px;
+  width: 7px; height: 7px;
+  background: var(--accent);
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+}
+.tl-year {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+.tl-title {
+  font-family: var(--serif);
+  font-size: 1rem;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.tl-body {
+  font-size: 0.88rem;
+  color: var(--sub);
+  line-height: 1.65;
+}
+
+/* ── HIGHLIGHT BOX ── */
+.hi-box {
+  background: var(--ink2);
+  border: 1px solid var(--rule);
+  border-left: 2px solid var(--accent);
+  padding: 28px 32px;
+  margin: 32px 0;
+}
+.hi-box h4 {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  color: var(--white);
+  margin-bottom: 14px;
+}
+.hi-box .points li { padding: 10px 0; }
+.hi-box .points li p { font-size: 0.85rem; color: var(--sub); }
+.hi-box .points li p strong { color: var(--light); }
+
+/* ── CLOSING ── */
+.closing {
+  min-height: 70vh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 100px 40px;
+}
+.closing h2 {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  color: var(--white);
+  max-width: 640px;
+  line-height: 1.25;
+  margin-bottom: 24px;
+}
+.closing p {
+  font-size: 0.92rem;
+  color: var(--sub);
+  max-width: 480px;
+  line-height: 1.7;
+}
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--rule);
+  padding: 36px 56px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+}
+footer p {
+  font-size: 0.72rem;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+
+/* ── REVEAL ── */
+.r {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.r.d1 { transition-delay: 0.08s; }
+.r.d2 { transition-delay: 0.16s; }
+.r.d3 { transition-delay: 0.24s; }
+.r.d4 { transition-delay: 0.32s; }
+.r.on { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 720px) {
+  nav { padding: 16px 24px; }
+  .nav-links { display: none; }
+  .slide-inner, .slide-inner-wide { padding: 0 24px; }
+  .stat-row { grid-template-columns: 1fr 1fr; }
+  .two-col { grid-template-columns: 1fr; }
+  .slide { padding: 88px 0; }
+  footer { flex-direction: column; text-align: center; gap: 8px; }
+}
+</style>
+</head>
+<body>
+
+<div id="prog"></div>
+
+<nav id="nav">
+  <span class="nav-brand">Legacy & Impact</span>
+  <ul class="nav-links">
+    <a href="#ch1">Long March</a>
+    <a href="#ch2">Land of the Free</a>
+    <a href="#ch3">Global Legacy</a>
+    <a href="#ch4">Today</a>
+  </ul>
+</nav>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section class="hero">
+  <div>
+    <p class="hero-label r">The Transatlantic Slave Trade</p>
+    <h1 class="r">Legacy &<br><em>Impact</em></h1>
+    <p class="hero-sub r">The lasting consequences of more than 400 years of trafficking of enslaved African people — on the United States and communities around the world.</p>
+    <div class="hero-scroll r">
+      <span>Scroll</span>
+      <div class="hero-arrow"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ OVERVIEW ══════════════ -->
+<section class="slide">
+  <div class="slide-inner">
+    <p class="ch-tag r">Overview</p>
+    <h2 class="slide-title r">The Scale of<br>the Crime</h2>
+    <p class="slide-intro r">We can't be sure how many African people were enslaved — most records count only those who arrived alive, not the millions who died during raids, transport within Africa, or the Middle Passage.</p>
+
+    <div class="stat-row r">
+      <div class="stat-cell">
+        <span class="stat-n">400+</span>
+        <span class="stat-l">Years of transatlantic trafficking</span>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-n">30M</span>
+        <span class="stat-l">Africans forcibly uprooted (UNESCO)</span>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-n">40.3M</span>
+        <span class="stat-l">People in modern slavery today</span>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-n">3.57×</span>
+        <span class="stat-l">More likely — Black Americans to die from Covid-19</span>
+      </div>
+    </div>
+
+    <ul class="points r">
+      <li><div class="dot"></div><p>The trauma, death and oppression over such an extended period left a <strong>deep, lasting impact on both the captives and the captors</strong> — from West Africa to Britain, France, Brazil, the US, the Caribbean and South America.</p></li>
+      <li><div class="dot"></div><p>Records only count people who arrived alive. <strong>Millions more died</strong> during raids in Africa, transport across the continent, or during the horrifying Middle Passage across the Atlantic.</p></li>
+      <li><div class="dot"></div><p>The lasting legacies are <strong>woven intricately into the fabric of our societies</strong> — in healthcare, policing, housing, education, employment, and culture.</p></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══════════════ CHAPTER 1 ══════════════ -->
+<section class="slide" id="ch1">
+  <div class="slide-inner">
+    <p class="ch-tag r">Chapter 1</p>
+    <h2 class="slide-title r">The Long March<br>to <em>Freedom</em></h2>
+    <p class="slide-intro r">After Reconstruction, Black Americans gave their lives to overthrow a system of subjugation, persecution and suffering — with dignity and courage.</p>
+
+    <h3 style="font-family:var(--serif); font-size:1rem; color:var(--sub); font-weight:400; margin-bottom:20px; letter-spacing:0.05em;" class="r">After the Civil War</h3>
+    <ul class="points r">
+      <li><div class="dot"></div><p>Freed families were promised <strong>40 acres and a mule</strong> — but President Andrew Jackson returned the land to former Confederates.</p></li>
+      <li><div class="dot"></div><p>Many were forced into <strong>sharecropping</strong>: working land for a portion of the harvest, trapped in debt peonage and exploitation.</p></li>
+      <li><div class="dot"></div><p>Scores migrated north and west to Chicago, Detroit, New York and Los Angeles — <strong>only to encounter racism and hostility</strong> there, too.</p></li>
+      <li><div class="dot"></div><p>The 13th, 14th & 15th Amendments were rapidly undermined. In 1883, the Supreme Court ruled states couldn't discriminate — but <strong>a patchwork of local laws did</strong>.</p></li>
+    </ul>
+
+    <hr class="r">
+    <h3 style="font-family:var(--serif); font-size:1rem; color:var(--sub); font-weight:400; margin-bottom:20px; letter-spacing:0.05em;" class="r">Jim Crow Laws</h3>
+    <ul class="points r">
+      <li><div class="dot"></div><p>Jim Crow laws formalised <strong>total segregation</strong> — from birth (Black hospitals) to death (Black graveyards). "Whites only" signs over bus stops, fountains, toilets and entrances.</p></li>
+      <li><div class="dot"></div><p>The <strong>"Grandfather Clause"</strong> barred anyone from voting whose grandfather hadn't voted — effectively disenfranchising all descendants of enslaved people.</p></li>
+      <li><div class="dot"></div><p>Many White employers practised <strong>debt peonage</strong> — manipulating wages to trap Black workers in a permanent cycle of debt, working for free.</p></li>
+      <li><div class="dot"></div><p>Between 1882 and 1968, <strong>3,446 Black people</strong> were lynched by the KKK and other white supremacist hate groups.</p></li>
+    </ul>
+
+    <div class="qblock r">
+      <p>"Jim Crow laws formed the pillars of a socioeconomic system designed to keep Black people subjugated in poverty."</p>
+    </div>
+  </div>
+</section>
+
+<!-- Timeline -->
+<section class="slide" style="border-bottom:1px solid var(--rule);">
+  <div class="slide-inner">
+    <p class="ch-tag r">Chapter 1 — Key Events</p>
+    <h2 class="slide-title r">The Fight<br>for Civil Rights</h2>
+
+    <div class="tl r">
+      <div class="tl-item">
+        <div class="tl-year">1921</div>
+        <div class="tl-title">Massacre on Black Wall Street</div>
+        <div class="tl-body">Tulsa's Greenwood District — the most affluent Black community in the US — was burned to the ground by a White mob. 35 city blocks razed, 800+ injured, hundreds killed, 10,000 left homeless. <strong>No one was ever prosecuted.</strong></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1920s</div>
+        <div class="tl-title">Harlem Renaissance</div>
+        <div class="tl-body">New York's Harlem neighbourhood became a beacon of Black culture, art, literature, music and intellectual life — giving Black people a powerful platform to express the African-American experience.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">Aug 1955</div>
+        <div class="tl-title">Emmett Till</div>
+        <div class="tl-body">14-year-old Emmett Till was tortured and murdered in Mississippi. His mother insisted on an open casket. The all-White jury acquitted the killers — who later confessed to <em>Look</em> magazine. His funeral galvanised the Civil Rights Movement.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">Dec 1955</div>
+        <div class="tl-title">Rosa Parks & the Bus Boycott</div>
+        <div class="tl-body">Rosa Parks' arrest sparked a 381-day citywide boycott spearheaded by Dr. Martin Luther King Jr., resulting in the desegregation of Montgomery's buses.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1957</div>
+        <div class="tl-title">Little Rock, Arkansas</div>
+        <div class="tl-body">President Eisenhower was forced to send federal troops to escort nine Black students into a previously all-White high school after the governor used the National Guard to block them.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1963</div>
+        <div class="tl-title">March on Washington</div>
+        <div class="tl-body">260,000 people gathered at the Lincoln Memorial for the March on Jobs and Freedom. Dr. King delivered his "I Have a Dream" speech. Photos of children being clubbed and bitten by police dogs shocked the nation.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1964</div>
+        <div class="tl-title">Civil Rights Act</div>
+        <div class="tl-body">After an 83-day Senate filibuster, the Civil Rights Act banned discrimination by race, colour, religion, sex or national origin. The Voting Rights Act followed in 1965 — Black voter registration rose from 35% to 65%.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1965</div>
+        <div class="tl-title">Selma to Montgomery</div>
+        <div class="tl-body">Dr. King led 500 marchers 54 miles from Selma to Montgomery. They were attacked by state troopers on national TV. The march grew to 25,000 and directly prompted the Voting Rights Act.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ CHAPTER 2 ══════════════ -->
+<section class="slide" id="ch2">
+  <div class="slide-inner">
+    <p class="ch-tag r">Chapter 2</p>
+    <h2 class="slide-title r">The Land of<br>the <em>Free...?</em></h2>
+    <p class="slide-intro r">The 13th Amendment abolished slavery — but included a loophole that has allowed the American penal system to repress minority classes ever since.</p>
+
+    <div class="qblock r">
+      <p>"Neither slavery nor involuntary servitude, <em>except as a punishment for crime</em> whereof the party shall have been duly convicted, shall exist within the United States."</p>
+      <cite>— 13th Amendment, US Constitution, 1865</cite>
+    </div>
+
+    <ul class="points r">
+      <li><div class="dot"></div><p>One in every 17 White males is expected to spend time in prison. For Black males: <strong>one in three.</strong></p></li>
+      <li><div class="dot"></div><p>Black males are <strong>6.5% of the US population</strong> but make up over <strong>40% of prison inmates.</strong></p></li>
+      <li><div class="dot"></div><p>After abolition, Southern lawmakers immediately <strong>criminalised the emancipated Black population</strong> — arresting Black men for petty crimes like vagrancy and loitering, then setting them to work under the "punishment for crime" clause.</p></li>
+      <li><div class="dot"></div><p>D.W. Griffith's 1915 film <em>Birth of a Nation</em> — which demonised Black men — was <strong>almost singularly responsible for the rebirth of the Ku Klux Klan.</strong> Its iconography is still in use by the white supremacy movement today.</p></li>
+    </ul>
+
+    <hr class="r">
+    <h3 style="font-family:var(--serif); font-size:1rem; color:var(--sub); font-weight:400; margin-bottom:20px; letter-spacing:0.05em;" class="r">The War on Drugs</h3>
+    <ul class="points r">
+      <li><div class="dot"></div><p>President Nixon introduced <strong>"dog whistle politics"</strong> — coded, racialised language — to garner Southern support without explicitly naming targets. He declared drugs "Public Enemy No. 1."</p></li>
+      <li><div class="dot"></div><p>The sentence for <strong>1 oz of crack</strong> was the same as for <strong>100 oz of cocaine</strong> — disproportionately targeting poorer Black communities over Whiter, wealthier cocaine users.</p></li>
+      <li><div class="dot"></div><p>From 1981 to 1989, the prison population grew from <strong>357,000 to 513,000.</strong> By 2000, it stood at over <strong>2.3 million.</strong></p></li>
+      <li><div class="dot"></div><p>Clinton's 1994 Crime Bill introduced the <strong>"three strikes" provision</strong> — mandatory life sentences after two prior convictions, including drug crimes — and massively militarised local police forces.</p></li>
+    </ul>
+
+    <hr class="r">
+    <h3 style="font-family:var(--serif); font-size:1rem; color:var(--sub); font-weight:400; margin-bottom:20px; letter-spacing:0.05em;" class="r">The Prison-Industrial Complex (PIC)</h3>
+    <ul class="points r">
+      <li><div class="dot"></div><p>Privately owned companies build and run prisons — and must ensure their investment is protected. <strong>They require full prisons.</strong></p></li>
+      <li><div class="dot"></div><p>The American Legislative Exchange Council (ALEC) — comprised of politicians and corporations including <strong>Walmart and Coca-Cola</strong> — allows companies to introduce legislative ideas voted on by politicians.</p></li>
+      <li><div class="dot"></div><p>CCA (now CoreCivic) describes itself as <strong>"the nation's leading provider of high-quality corrections and detention management."</strong></p></li>
+      <li><div class="dot"></div><p>The 13th Amendment granted freedom to the enslaved — but has also <strong>attacked those freedoms</strong> across a complicated and often cruel history that is still evolving today.</p></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══════════════ CHAPTER 3 ══════════════ -->
+<section class="slide" id="ch3">
+  <div class="slide-inner-wide">
+    <div class="slide-inner" style="padding:0; max-width:100%;">
+      <p class="ch-tag r">Chapter 3</p>
+      <h2 class="slide-title r">Legacy &<br><em>Lasting Impact</em></h2>
+      <p class="slide-intro r">More than 400 years of transatlantic trafficking left consequences that reach into every corner of the world — and into every aspect of daily life today.</p>
+    </div>
+
+    <div class="two-col r">
+      <div class="col-block">
+        <h4>Systemic Racism</h4>
+        <ul class="points">
+          <li><div class="dot"></div><p>Black people in the US were <strong>3.57× more likely to die from Covid-19</strong> than White people (2020 study).</p></li>
+          <li><div class="dot"></div><p>A 2016 study found many White medical students still held <strong>false beliefs about Black pain tolerance</strong> — the same beliefs used to justify inhumane treatment of the enslaved.</p></li>
+          <li><div class="dot"></div><p>A 2021 TUC survey found over <strong>a third of BME workers in Britain</strong> had been unfairly turned down for a job; 15% reported being singled out for redundancy due to racist treatment.</p></li>
+          <li><div class="dot"></div><p>African and Bangladeshi households hold <strong>ten times less wealth</strong> than White households in the UK (Runnymede, 2020).</p></li>
+        </ul>
+      </div>
+      <div class="col-block">
+        <h4>Policing — Origins & Today</h4>
+        <ul class="points">
+          <li><div class="dot"></div><p>In 1661, Barbados passed its first "slave law." <strong>Slave codes spread</strong> to English and European colonies worldwide. These were the direct precursors to modern policing.</p></li>
+          <li><div class="dot"></div><p>Patrick Colquhoun — who owned shares in Jamaican sugar plantations — <strong>inspired Robert Peel</strong> to establish the London Metropolitan Police in 1829.</p></li>
+          <li><div class="dot"></div><p>In the US, the first police forces were created <strong>to control enslaved people</strong> and protect White communities — not to serve all citizens.</p></li>
+          <li><div class="dot"></div><p>African Americans are <strong>~3× more likely to be killed by police</strong> than White Americans. In the UK, Black people are 8× more likely to be stopped and searched.</p></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="two-col r">
+      <div class="col-block">
+        <h4>Reparations & Wealth</h4>
+        <ul class="points">
+          <li><div class="dot"></div><p>In 2016, UK taxpayers found out they'd <strong>only just finished repaying</strong> the £20M loan Britain took out in 1833 to compensate 46,000 slave owners — not the enslaved.</p></li>
+          <li><div class="dot"></div><p>France extorted <strong>reparations from Haiti for over a century</strong> — paid to enslavers, not to the formerly enslaved — for "loss of property" after the Haitian Revolution.</p></li>
+          <li><div class="dot"></div><p>UCL's 2012 project found <strong>10–20% of Britain's wealthiest people</strong> have significant links to slavery.</p></li>
+          <li><div class="dot"></div><p>Since 2020 BLM protests, several UK financial institutions issued public apologies for ties to the slave trade — but many argue <strong>apologies are not enough.</strong></p></li>
+        </ul>
+      </div>
+      <div class="col-block">
+        <h4>Impact on Africa & Modern Slavery</h4>
+        <ul class="points">
+          <li><div class="dot"></div><p>An estimated <strong>20 million guns</strong> were imported to Africa in the second half of the 18th century — many manufactured in Birmingham, UK — destabilising entire regions.</p></li>
+          <li><div class="dot"></div><p>The trafficking <strong>destroyed existing governance systems</strong> based on kinship, consent and trust, creating long-term economic and political instability.</p></li>
+          <li><div class="dot"></div><p>The Global Slavery Index (2016) found <strong>40.3 million people</strong> in modern slavery — 24.9M in forced labour, 15.4M in forced marriage. Women & girls = 71% of victims.</p></li>
+          <li><div class="dot"></div><p>Modern slavery is <strong>most prevalent in Africa</strong>, followed by Asia and the Pacific. It remains a largely invisible global crisis.</p></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ CHAPTER 4 ══════════════ -->
+<section class="slide" id="ch4">
+  <div class="slide-inner">
+    <p class="ch-tag r">Chapter 4</p>
+    <h2 class="slide-title r">The Fight<br><em>Continues</em></h2>
+    <p class="slide-intro r">From Black Lives Matter to reparations, statue removal to language reform — the struggle for justice is very much alive.</p>
+
+    <h3 style="font-family:var(--serif); font-size:1rem; color:var(--sub); font-weight:400; margin-bottom:20px; letter-spacing:0.05em;" class="r">Black Lives Matter</h3>
+    <ul class="points r">
+      <li><div class="dot"></div><p>Founded in 2013 by <strong>Alicia Garza, Patrisse Cullors & Opal Tometi</strong> after the acquittal of George Zimmerman for the murder of Trayvon Martin.</p></li>
+      <li><div class="dot"></div><p>After the murder of George Floyd by Minneapolis officer Derek Chauvin in 2020, an estimated <strong>15–26 million people</strong> participated in protests in the US — one of the largest movements in American history.</p></li>
+      <li><div class="dot"></div><p>BLM has grown into a <strong>decentralised global movement</strong> — active in Britain, Brazil, Colombia, Denmark, France, Canada and beyond.</p></li>
+      <li><div class="dot"></div><p>In 2021, the UN Human Rights Council adopted a resolution to <strong>investigate the root causes of systemic racism</strong> and police violence worldwide.</p></li>
+    </ul>
+
+    <hr class="r">
+    <h3 style="font-family:var(--serif); font-size:1rem; color:var(--sub); font-weight:400; margin-bottom:20px; letter-spacing:0.05em;" class="r">Monuments & Memory</h3>
+    <ul class="points r">
+      <li><div class="dot"></div><p>Over <strong>170 Confederate monuments</strong> were removed across the US between June 2020 and June 2021.</p></li>
+      <li><div class="dot"></div><p>In 2021, <strong>Germany announced</strong> it would return hundreds of stolen artefacts to Benin in West Africa, pillaged during the colonial era.</p></li>
+      <li><div class="dot"></div><p>The <strong>Church of England</strong> publicly apologised for inheriting three Caribbean sugar estates run with the forced labour of enslaved people.</p></li>
+      <li><div class="dot"></div><p>Many anti-racism campaigners say: <strong>"It is not enough to make your apology as a public spectacle — it is not enough to present it as a PR exercise."</strong></p></li>
+    </ul>
+
+    <hr class="r">
+
+    <div class="two-col r">
+      <div class="col-block">
+        <h4>Language Matters</h4>
+        <ul class="points">
+          <li><div class="dot"></div><p>Say <strong>"enslaved people"</strong> or "captives" — not "slaves"</p></li>
+          <li><div class="dot"></div><p>Say <strong>"trafficking of enslaved Africans"</strong> — not "slave trade"</p></li>
+          <li><div class="dot"></div><p>Use <strong>"enslaver"</strong> — not "master" or "owner"</p></li>
+          <li><div class="dot"></div><p>Say <strong>"self-liberated"</strong> or "freedom fighter" — not "runaway slave"</p></li>
+          <li><div class="dot"></div><p>Consider <strong>"stolen labour, knowledge and skills"</strong> — not just "stolen labour"</p></li>
+        </ul>
+      </div>
+      <div class="col-block">
+        <h4>Defunding the Police?</h4>
+        <ul class="points">
+          <li><div class="dot"></div><p>Advocates say the goal is simply <strong>to invest in services</strong> that address community issues — mental health, homelessness, rehabilitation — rather than policing.</p></li>
+          <li><div class="dot"></div><p>In a 2015 Washington Post analysis, <strong>25% of those shot and killed</strong> by police in a 6-month period were experiencing a mental health crisis.</p></li>
+          <li><div class="dot"></div><p>Sweden has since 2015 <strong>deployed mental health professionals</strong> instead of police officers for relevant calls — freeing up police for serious crime.</p></li>
+          <li><div class="dot"></div><p>In 2020, over a dozen US city governments moved to <strong>reduce police budgets by more than $1.4 billion.</strong></p></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ CLOSING ══════════════ -->
+<section class="closing">
+  <h2 class="r">"The wounds of slavery are still open and festering."</h2>
+  <p class="r" style="margin-top:24px;">The lasting impacts of the transatlantic slave trade are so huge, widespread and complex that they cannot be fully covered here. We all have a responsibility to educate ourselves on these legacies — and to consider what actions we can take to help create a more equal society that is not modelled on such a horrifying history.</p>
+  <div style="width:40px; height:2px; background:var(--accent); margin:48px auto 0;" class="r"></div>
+</section>
+
+<footer>
+  <p>Based on <em>Legacy & Impact</em> — The Transatlantic Slave Trade</p>
+  <p>Articles by Hareth Al Bustani · Will Lawrence · Josephine Hall</p>
+</footer>
+
+<script>
+  // Progress bar
+  const prog = document.getElementById('prog');
+  const nav  = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    const d = document.documentElement;
+    prog.style.width = (d.scrollTop / (d.scrollHeight - d.clientHeight) * 100) + '%';
+    nav.classList.toggle('solid', d.scrollTop > 40);
+  }, { passive: true });
+
+  // Reveal on scroll
+  const els = document.querySelectorAll('.r');
+  const io  = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -48px 0px' });
+  els.forEach(el => io.observe(el));
+</script>
+</body>
+</html>
